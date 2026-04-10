@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Hub | PJSK Security Center</title>
+    <style>
+        /* BASE & THEME SETUP */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+            background-color: #000;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(30, 30, 70, 0.4) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(70, 20, 20, 0.2) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #fff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 25px; }
+
+        /* GLASSMORPHISM UTILITY */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            margin-top: 20px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-weight: 900; letter-spacing: 4px; font-size: 0.8rem; text-transform: uppercase; }
+
+        .lang-switcher { display: flex; gap: 8px; }
+        .lang-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.4);
+            padding: 8px 16px;
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            border-radius: 15px;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .lang-btn.active { background: #fff; color: #000; border-color: #fff; }
+
+        /* HERO SECTION */
+        .hero { padding: 100px 0 60px 0; text-align: center; }
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            letter-spacing: -3px;
+            line-height: 1;
+            margin-bottom: 25px;
+            background: linear-gradient(180deg, #fff 40%, rgba(255,255,255,0.3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            color: rgba(255,255,255,0.3);
+            margin: 60px 0 30px 0;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        /* CONTENT BLOCK */
+        .block { padding: 50px; margin-bottom: 40px; }
+        .block h2 { font-size: 2rem; margin-bottom: 25px; letter-spacing: -1px; }
+
+        /* SERVER GRID */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .card-inner {
+            padding: 30px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .card-inner h4 { margin-bottom: 15px; text-transform: uppercase; font-size: 0.75rem; color: #888; letter-spacing: 2px; }
+        .card-inner ul { list-style: none; font-size: 0.95rem; color: rgba(255,255,255,0.6); }
+        .card-inner li { margin-bottom: 12px; padding-left: 20px; position: relative; }
+        .card-inner li::before { content: "•"; position: absolute; left: 0; color: #555; }
+
+        /* BAN PROOF GALLERY */
+        .proof-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .proof-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #111;
+        }
+        .proof-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        .proof-item:hover img { opacity: 1; }
+        .proof-tag {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(255, 59, 48, 0.9);
+            color: #fff;
+            padding: 4px 12px;
+            font-size: 10px;
+            font-weight: 800;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+
+        /* PROTOCOL CARDS */
+        .protocol {
+            border-left: 4px solid #ff3b30;
+            background: rgba(255, 59, 48, 0.05);
+            padding: 30px;
+            border-radius: 0 20px 20px 0;
+            margin-bottom: 20px;
+        }
+        .protocol h3 { font-size: 1.1rem; margin-bottom: 10px; color: #ff453a; }
+        .protocol p { font-size: 0.95rem; color: rgba(255,255,255,0.7); }
+
+        footer { padding: 80px 0; text-align: center; font-size: 9px; letter-spacing: 8px; opacity: 0.2; text-transform: uppercase; }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .block { padding: 30px; }
+            .hero h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="glass">
+            <div class="logo">Rhythm Hub Security</div>
+            <div class="lang-switcher">
+                <button class="lang-btn active" onclick="setLanguage('id')">ID</button>
+                <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" onclick="setLanguage('ja')">JP</button>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <h1 id="hero-title">INTEGRITAS.<br>MODULASI.</h1>
+        </section>
+
+        <div class="section-label" id="label-usage">Operational Specs</div>
+        <div class="block glass">
+            <h2 id="title-server">Global & Japan Implementation</h2>
+            <p style="color: #888; margin-bottom: 30px; font-size: 0.9rem;" id="desc-server">Infrastruktur keamanan inti dikembangkan oleh tim yang sama. Mekanisme deteksi di server Jepang (JP) akan diimplementasikan secara bertahap atau langsung ke server Global (EN).</p>
+            <div class="grid-2">
+                <div class="card-inner">
+                    <h4 id="en-t">Server Global (EN)</h4>
+                    <ul id="en-l">
+                        <li>Deteksi sistem berkala (Weekly Sweep).</li>
+                        <li>Lebih aman untuk penggunaan Story Skipper.</li>
+                        <li>Moderasi Multi-Live manual oleh staf pengembang yang sama dengan server JP.</li>
+                    </ul>
+                </div>
+                <div class="card-inner">
+                    <h4 id="jp-t">Server Japan (JP)</h4>
+                    <ul id="jp-l">
+                        <li>Deteksi AI-Side Real-time yang sangat ketat dan agresif.</li>
+                        <li>Update versi mingguan secara rutin memicu pendeteksian APK modifikasi.</li>
+                        <li>Event "World Link" memiliki proteksi data ganda yang sangat sensitif.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-label" id="label-proof">Ban Evidence (Proof)</div>
+        <div class="block glass">
+            <h2 id="title-proof">Konsekuensi Deteksi</h2>
+            <p style="color: #888; margin-bottom: 30px; font-size: 0.9rem;" id="desc-proof">Berikut adalah bukti nyata penangguhan akun (Ban) yang berlaku secara universal. Jika terdeteksi melakukan kecurangan pada ritme permainan, akses data akan dihentikan tanpa batas waktu.</p>
+            
+            <div class="proof-gallery">
+                <div class="proof-item">
+                    <img src="https://i.imgur.com/wPRVBej.jpeg" alt="Ban JP 1">
+                    <div class="proof-tag">JP Server Proof</div>
+                </div>
+                <div class="proof-item">
+                    <img src="https://i.imgur.com/NnqYR7b.jpeg" alt="Ban JP 2">
+                    <div class="proof-tag">Indefinite Ban</div>
+                </div>
+                <div class="proof-item">
+                    <img src="https://i.imgur.com/UEAK5QT.jpeg" alt="Interface Ban">
+                    <div class="proof-tag">Security Warning</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-label" id="label-protocol">Strict Protocols</div>
+        <div class="block glass">
+            <div class="protocol">
+                <h3 id="p1-t">Sinkronisasi Koordinat (Wajib)</h3>
+                <p id="p1-d">Server mencatat titik koordinat sentuhan. Mengaktifkan Auto-Notes tanpa menyentuh layar secara fisik akan memicu 'Flagging' otomatis pada database pusat pengembang.</p>
+            </div>
+            <div class="protocol" style="border-left-color: #ff9500; background: rgba(255,149,0,0.05);">
+                <h3 id="p2-t" style="color: #ff9500;">Penyalahgunaan Skor</h3>
+                <p id="p2-d">Mendapatkan skor All Perfect pada lagu Master Level 30+ dengan kartu atau rank rendah adalah pemicu utama ban manual di semua server.</p>
+            </div>
+            <div class="protocol" style="border-left-color: #007aff; background: rgba(0,122,255,0.05);">
+                <h3 id="p3-t" style="color: #007aff;">Aturan Co-op (Multi-Live)</h3>
+                <p id="p3-d">Fitur pelaporan pemain di mode publik memudahkan investigasi manual. Laporan dari pemain lain adalah cara tercepat akun ditangguhkan secara permanen.</p>
+            </div>
+        </div>
+
+        <footer id="footer-text">
+            RH-SYSTEM CORE // UNIVERSAL SECURITY // 2026
+        </footer>
+    </div>
+
+    <script>
+        const translations = {
+            id: {
+                heroTitle: "INTEGRITAS.<br>MODULASI.",
+                labelUsage: "Operational Specs",
+                titleServer: "Global & Japan Implementation",
+                descServer: "Infrastruktur keamanan inti dikembangkan oleh tim yang sama. Mekanisme deteksi di server Jepang (JP) akan diimplementasikan secara bertahap atau langsung ke server Global (EN).",
+                enT: "Server Global (EN)",
+                enL: "<li>Deteksi sistem berkala (Weekly Sweep).</li><li>Lebih aman untuk penggunaan Story Skipper.</li><li>Moderasi Multi-Live manual oleh staf pengembang yang sama dengan server JP.</li>",
+                jpT: "Server Japan (JP)",
+                jpL: "<li>Deteksi AI-Side Real-time yang sangat ketat dan agresif.</li><li>Update versi mingguan secara rutin memicu pendeteksian APK modifikasi.</li><li>Event 'World Link' memiliki proteksi data ganda yang sangat sensitif.</li>",
+                labelProof: "Ban Evidence (Proof)",
+                titleProof: "Konsekuensi Deteksi",
+                descProof: "Berikut adalah bukti nyata penangguhan akun (Ban) yang berlaku secara universal. Jika terdeteksi melakukan kecurangan pada ritme permainan, akses data akan dihentikan tanpa batas waktu.",
+                labelProtocol: "Strict Protocols",
+                p1T: "Sinkronisasi Koordinat (Wajib)",
+                p1D: "Server mencatat titik koordinat sentuhan. Mengaktifkan Auto-Notes tanpa menyentuh layar secara fisik akan memicu 'Flagging' otomatis pada database pusat pengembang.",
+                p2T: "Penyalahgunaan Skor",
+                p2D: "Mendapatkan skor All Perfect pada lagu Master Level 30+ dengan kartu atau rank rendah adalah pemicu utama ban manual di semua server.",
+                p3T: "Aturan Co-op (Multi-Live)",
+                p3D: "Fitur pelaporan pemain di mode publik memudahkan investigasi manual. Laporan dari pemain lain adalah cara tercepat akun ditangguhkan secara permanen.",
+                footer: "RH-SYSTEM CORE // UNIVERSAL SECURITY // 2026"
+            },
+            en: {
+                heroTitle: "INTEGRITY.<br>MODULATION.",
+                labelUsage: "Operational Specs",
+                titleServer: "Global & Japan Implementation",
+                descServer: "Core security infrastructure is developed by the same team. Detection mechanisms on the Japan (JP) server will be implemented gradually or directly to the Global (EN) server.",
+                enT: "Global Server (EN)",
+                enL: "<li>Periodic system sweeps (Weekly Sweep).</li><li>Safer for Story Skipper usage.</li><li>Manual Multi-Live moderation by the same development staff as the JP server.</li>",
+                jpT: "Japan Server (JP)",
+                jpL: "<li>Extremely strict and aggressive real-time AI-side detection.</li><li>Routine weekly version updates trigger modified APK detection.</li><li>'World Link' events have highly sensitive double data protection.</li>",
+                labelProof: "Ban Evidence (Proof)",
+                titleProof: "Consequences of Detection",
+                descProof: "Here is concrete evidence of account suspension (Ban) that applies universally. If detected cheating in the rhythm game, data access will be stopped indefinitely.",
+                labelProtocol: "Strict Protocols",
+                p1T: "Coordinate Sync (Mandatory)",
+                p1D: "Servers record touch coordinates. Enabling Auto-Notes without physical touch will trigger automatic 'Flagging' in the developer's central database.",
+                p2T: "Score Misuse",
+                p2D: "Achieving All Perfect scores on Master Level 30+ songs with low-rank cards or accounts is a major trigger for manual bans on all servers.",
+                p3T: "Co-op Rules (Multi-Live)",
+                p3D: "Player reporting features in public modes facilitate manual investigation. Reports from other players are the fastest way for accounts to be permanently suspended.",
+                footer: "RH-SYSTEM CORE // UNIVERSAL SECURITY // 2026"
+            },
+            ja: {
+                heroTitle: "整合性。<br>変調。",
+                labelUsage: "操作仕様",
+                titleServer: "グローバル＆日本版の実装",
+                descServer: "コアセキュリティインフラは同じチームによって開発されています。日本サーバー（JP）の検知メカニズムは、段階的または直接グローバルサーバー（EN）に実装されます。",
+                enT: "グローバルサーバー (EN)",
+                enL: "<li>定期的なシステムスイープ（週次）。</li><li>ストーリースキッパーの使用に最適。</li><li>日本サーバーと同じ開発スタッフによる手動のマルチライブ監視。</li>",
+                jpT: "日本サーバー (JP)",
+                jpL: "<li>非常に厳格でアグレッシブなリアルタイムAI検知。</li><li>毎週のアップデートにより、改造APKの検知が頻繁に発生します。</li><li>「ワールドリンク」イベントは、非常に機密性の高い二重のデータ保護を備えています。</li>",
+                labelProof: "BANの証拠 (Proof)",
+                titleProof: "検知の結果",
+                descProof: "これは世界共通で適用されるアカウント停止（BAN）の具体的な証拠です。リズムゲームでの不正が検知された場合、データアクセスは無期限に停止されます。",
+                labelProtocol: "厳格なプロトコル",
+                p1T: "座標同期 (必須)",
+                p1D: "サーバーはタッチ座標を記録します。物理的なタッチなしでオートノートを有効にすると、開発者の中央データベースで自動的にフラグが立てられます。",
+                p2T: "スコアの不正利用",
+                p2D: "カードレベルやランクが低い状態で、Master 30+の曲で「All Perfect」を取ることは、すべてのサーバーで手動BANの主な原因となります。",
+                p3T: "協力プレイのルール (Multi-Live)",
+                p3D: "パブリックモードでのプレイヤー通報機能は手動調査を容易にします。他プレイヤーからの通報は、アカウントが永久停止される最短のルートです。",
+                footer: "RH-SYSTEM CORE // UNIVERSAL SECURITY // 2026"
+            }
+        };
+
+        function setLanguage(lang) {
+            const t = translations[lang];
+            document.getElementById('hero-title').innerHTML = t.heroTitle;
+            document.getElementById('label-usage').innerText = t.labelUsage;
+            document.getElementById('title-server').innerText = t.titleServer;
+            document.getElementById('desc-server').innerText = t.descServer;
+            document.getElementById('en-t').innerText = t.enT;
+            document.getElementById('en-l').innerHTML = t.enL;
+            document.getElementById('jp-t').innerText = t.jpT;
+            document.getElementById('jp-l').innerHTML = t.jpL;
+            document.getElementById('label-proof').innerText = t.labelProof;
+            document.getElementById('title-proof').innerText = t.titleProof;
+            document.getElementById('desc-proof').innerText = t.descProof;
+            document.getElementById('label-protocol').innerText = t.labelProtocol;
+            document.getElementById('p1-t').innerText = t.p1T; document.getElementById('p1-d').innerText = t.p1D;
+            document.getElementById('p2-t').innerText = t.p2T; document.getElementById('p2-d').innerText = t.p2D;
+            document.getElementById('p3-t').innerText = t.p3T; document.getElementById('p3-d').innerText = t.p3D;
+            document.getElementById('footer-text').innerText = t.footer;
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.toLowerCase() === (lang === 'ja' ? 'jp' : lang)) btn.classList.add('active');
+            });
+        }
+    </script>
+</body>
+</html>
